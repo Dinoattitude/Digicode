@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Digicode</string>
+    <string name="lbl_date">Choix de la date</string>
+    <string name="btn_digicode">OBTENIR DIGICODE</string>
+</resources>
