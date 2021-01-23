@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private Button btnDigicode;
     private final String[] salles = new String[]{
-            "Majorelle", "Gruber", "Lamour", "Longwy"
+            "Majorelle", "Gruber", "Lamour", "Longwy", "Daum", "Gallé", "Corbin", "Baccarat"
     };
     private int mListViewPosition = 0;
 
