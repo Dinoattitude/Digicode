@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createSalle(){
-        ctrlInstance.createSalle(mListView.getItemAtPosition(mListViewPosition).toString(), mCalendarViewDate, this);
+        //TODO Créer une salle ici
     }
 
     private void recupSalle(){

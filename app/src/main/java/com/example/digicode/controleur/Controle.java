@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.digicode.modele.Salle;
-import com.example.digicode.utils.Serializer;
 
 import java.util.Date;
 
@@ -32,13 +31,4 @@ public class Controle {
         this.salle = salle;
     }
 
-    public void createSalle(String nom, Date dateOccupation, Context context){
-        salle = new Salle(nom, dateOccupation);
-        Serializer.serialize(filename, salle, context);
-    }
-
-    public static Salle getSalle(Context context){
-        Salle uneSalle = (Salle) Serializer.deSerialize(filename, context);
-        return uneSalle;
-    }
 }
