@@ -4,13 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.digicode.modele.Salle;
+import com.example.digicode.utils.SqlHelper;
 
 import java.util.Date;
 
 public class Controle {
 
     private static final Controle instance = new Controle();
-    private static String filename = "saveSalle"; //nom du fichier de sauvegarde des salles qui sont réservés
     private Salle salle;
 
     public static Controle getInstance() { return instance; }

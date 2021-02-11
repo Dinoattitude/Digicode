@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class SqlHelper extends SQLiteOpenHelper {
 
@@ -21,7 +24,7 @@ public class SqlHelper extends SQLiteOpenHelper {
                 "login TEXT, "+
                 "password TEXT )";
 
-        String CREATE_SALLE_TABLE = "CREATE TABLE salle ( " +
+        String CREATE_SALLE_TABLE = "CREATE TABLE salles ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nom TEXT )";
 
@@ -34,6 +37,8 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO users VALUES(2,'b@gmail.com',456)");
 
         db.execSQL("INSERT INTO salles VALUES(1,'Majorelle')");
+        db.execSQL("INSERT INTO salles VALUES(2,'Salle2')");
+        db.execSQL("INSERT INTO salles VALUES(3,'Salle3')");
     }
 
     @Override
@@ -44,6 +49,8 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_USERS = "users";
 
+    private static final String TABLE_SALLES = "salles";
+
 
     private static final String USERS_KEY_ID = "id";
     private static final String USERS_KEY_LOGIN = "login";
@@ -51,6 +58,11 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     private static final String[] USERS_COLUMNS = {USERS_KEY_ID,USERS_KEY_LOGIN,USERS_KEY_PASSWORD};
 
+
+    private static final String SALLES_NOM = "nom";
+    private static final String SALLES_ID = "id";
+
+    private static final String[] SALLES_COLUMNS = {SALLES_ID,SALLES_NOM};
 
     public boolean login(String login, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -62,5 +74,22 @@ public class SqlHelper extends SQLiteOpenHelper {
             }
         }
         return false;
+    }
+
+    public ArrayList getSalles(){
+        ArrayList<String> salles = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor mCursor = db.query(TABLE_SALLES, SALLES_COLUMNS, null, null, null, null, null);
+
+        mCursor.moveToFirst();
+        while (!mCursor.isAfterLast()) {
+            salles.add(mCursor.getString(1));
+            Log.i("aled", mCursor.getString(1));
+            mCursor.moveToNext();
+        }
+        mCursor.close();
+
+        return salles;
     }
 }
