@@ -2,4 +2,12 @@
     <string name="app_name">Digicode</string>
     <string name="lbl_date">Choix de la date</string>
     <string name="btn_digicode">OBTENIR DIGICODE</string>
+
+    //text connection
+    <string name="name_mail">Votre email</string>
+    <string name="name_mdp">Votre mot de passe</string>
+    <string name="name_connect">Se Connecter</string>
+
+    //message error
+    <string name="name_Valide">OK</string>
 </resources>

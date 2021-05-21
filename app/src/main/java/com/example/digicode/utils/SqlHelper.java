@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SqlHelper extends SQLiteOpenHelper {
@@ -28,8 +29,15 @@ public class SqlHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nom TEXT )";
 
+        String CREATE_DIGICODE_TABLE = "CREATE TABLE digicode (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "idSalle INTEGER, " +
+                "idDate INTEGER, " +
+                "idDigicode INTEGER )";
+
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_SALLE_TABLE);
+        db.execSQL(CREATE_DIGICODE_TABLE);
 
         // Creation d'un jeu d'essai
 
@@ -37,19 +45,31 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO users VALUES(2,'b@gmail.com',456)");
 
         db.execSQL("INSERT INTO salles VALUES(1,'Majorelle')");
-        db.execSQL("INSERT INTO salles VALUES(2,'Salle2')");
-        db.execSQL("INSERT INTO salles VALUES(3,'Salle3')");
+        db.execSQL("INSERT INTO salles VALUES(2,'Gruber')");
+        db.execSQL("INSERT INTO salles VALUES(3,'Lamour')");
+        db.execSQL("INSERT INTO salles VALUES(4,'Longwy')");
+        db.execSQL("INSERT INTO salles VALUES(5,'Daum')");
+        db.execSQL("INSERT INTO salles VALUES(6,'Gallé')");
+        db.execSQL("INSERT INTO salles VALUES(7,'Corbin')");
+        db.execSQL("INSERT INTO salles VALUES(8,'Baccarat')");
+
+        db.execSQL("INSERT INTO digicode VALUES(1,1,1,1234)");
+        db.execSQL("INSERT INTO digicode VALUES(2,1,2,5678)");
+        db.execSQL("INSERT INTO digicode VALUES(3,2,1,9101)");
+        db.execSQL("INSERT INTO digicode VALUES(4,2,2,1213)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS users");
         db.execSQL("DROP TABLE IF EXISTS salles");
+        db.execSQL("DROP TABLE IF EXISTS digicode");
     }
 
     private static final String TABLE_USERS = "users";
 
     private static final String TABLE_SALLES = "salles";
+    private static final String TABLE_DIGICODE = "digicode";
 
 
     private static final String USERS_KEY_ID = "id";
@@ -63,6 +83,13 @@ public class SqlHelper extends SQLiteOpenHelper {
     private static final String SALLES_ID = "id";
 
     private static final String[] SALLES_COLUMNS = {SALLES_ID,SALLES_NOM};
+
+    private static final String DIGICODE_ID = "id";
+    private static final String DIGICODE_SALLE = "idSalle";
+    private static final String DIGICODE_DATE = "idDate";
+    private static final String DIGICODE_DIG = "idDigicode";
+
+    private static final String[] DIGICODE_COLUMNS = {DIGICODE_ID,DIGICODE_SALLE,DIGICODE_DATE,DIGICODE_DIG};
 
     public boolean login(String login, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -92,4 +119,22 @@ public class SqlHelper extends SQLiteOpenHelper {
 
         return salles;
     }
+
+    public int recupDigicode(String mois, String numeroSalle){
+
+        int digicode = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor mCursor = db.query(TABLE_DIGICODE, DIGICODE_COLUMNS, "idDate=" + mois + " AND idSalle=" + numeroSalle, null, null, null, null);
+
+        mCursor.moveToFirst();
+        while (!mCursor.isAfterLast()) {
+            digicode = mCursor.getInt(mCursor.getColumnIndex(DIGICODE_DIG));
+            mCursor.moveToNext();
+        }
+        mCursor.close();
+
+        return digicode;
+    }
+
 }

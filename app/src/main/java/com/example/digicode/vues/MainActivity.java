@@ -32,12 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private Button btnDigicode;
     private CalendarView calendarView;
     private ArrayList<String> salles;
-    /*private final String[] salles = new String[]{
-            "Majorelle", "Gruber", "Lamour", "Longwy", "Daum", "Gallé", "Corbin", "Baccarat"
-    };*/
+
     //Variables temporaires pour la position de la liste et de la date choisie
-    private int mListViewPosition = 0;
-    private Date mCalendarViewDate;
+    private int numSalle = 0;
+    private int moisChoisis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendar);
 
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_single_choice, salles); //TODO salles or salle
+                android.R.layout.simple_list_item_single_choice, salles);
         mListView.setAdapter(adapter2);
 
         mListView.setClickable(true);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3){
-                mListViewPosition = position;
+                numSalle = position + 1;
             }
         });
 
@@ -72,24 +70,21 @@ public class MainActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
                 Calendar c = Calendar.getInstance();
                 c.set(year, month, day);
-                mCalendarViewDate = c.getTime();
+                moisChoisis = month;
             }
         });
 
         btnDigicode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"Salle : " + mListView.getItemAtPosition(mListViewPosition),Toast.LENGTH_LONG).show();
+                //Toast.makeText(v.getContext(),"Salle : " + mListView.getItemAtPosition(mListViewPosition),Toast.LENGTH_LONG).show();
 
-                recupSalle();
+                String digicode = "";
+                digicode = String.valueOf(sqlInstance.recupDigicode(String.valueOf(moisChoisis),String.valueOf(numSalle)));
+                Toast.makeText(getApplicationContext(), "Digicode : " + digicode, Toast.LENGTH_LONG).show();
             }
         });
 
-    }
-
-    private void recupSalle(){
-        Salle salle = (Salle) ctrlInstance.getSalle();
-        Log.i("Salle Serializer",  salle.getNom() + " " + salle.getDateOccupation().toString());
     }
 
 
