@@ -91,16 +91,20 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     private static final String[] DIGICODE_COLUMNS = {DIGICODE_ID,DIGICODE_SALLE,DIGICODE_DATE,DIGICODE_DIG};
 
-    public boolean login(String login, String password) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor mCursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE login=? AND password=?", new String[]{login,password});
+    public boolean isValidLogin(String mail, String password) {
+        boolean isEmpty = true;
 
-        if (mCursor != null) {
-            if(mCursor.getCount() > 0) {
-                return true;
-            }
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor mCursor = db.query(TABLE_USERS, USERS_COLUMNS, "login=\'" + mail + "\' AND password=" + password, null, null, null, null);
+
+        mCursor.moveToFirst();
+        while (!mCursor.isAfterLast()) {
+            isEmpty = mCursor.getCount() > 0 ? true : false;
+            mCursor.moveToNext();
         }
-        return false;
+        mCursor.close();
+
+        return isEmpty;
     }
 
     public ArrayList getSalles(){
@@ -112,7 +116,6 @@ public class SqlHelper extends SQLiteOpenHelper {
         mCursor.moveToFirst();
         while (!mCursor.isAfterLast()) {
             salles.add(mCursor.getString(1));
-            Log.i("aled", mCursor.getString(1));
             mCursor.moveToNext();
         }
         mCursor.close();

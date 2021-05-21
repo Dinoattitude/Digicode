@@ -29,7 +29,7 @@ public class Salle implements Serializable {
     }
 
     @Override
-    public String toString(){ //Erreur sa mère whalla ç a ma saoulé : return null pour l'objet quand la date est pas selectionnée dans le calendrier
+    public String toString(){ //Erreur : return null pour l'objet quand la date est pas selectionnée dans le calendrier
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String selectedDate = "";
         //On regarde si la date est null, si oui on met la date systeme, sinon on met la date de la salle)

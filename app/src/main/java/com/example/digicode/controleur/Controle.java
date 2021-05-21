@@ -17,10 +17,6 @@ public class Controle {
 
     private Controle(){
         super();
-
-        //Pour les tests
-        setSalle(new Salle("Gruber", new java.util.Date()));
-        Log.i("Salle", this.getSalle().toString());
     }
 
     public Salle getSalle() {

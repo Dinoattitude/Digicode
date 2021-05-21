@@ -77,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
         btnDigicode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(v.getContext(),"Salle : " + mListView.getItemAtPosition(mListViewPosition),Toast.LENGTH_LONG).show();
-
                 String digicode = "";
                 digicode = String.valueOf(sqlInstance.recupDigicode(String.valueOf(moisChoisis),String.valueOf(numSalle)));
                 Toast.makeText(getApplicationContext(), "Digicode : " + digicode, Toast.LENGTH_LONG).show();
