@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
                 Calendar c = Calendar.getInstance();
                 c.set(year, month, day);
-                moisChoisis = month;
+                moisChoisis = month + 1;
             }
         });
 
